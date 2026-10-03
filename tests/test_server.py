@@ -81,6 +81,10 @@ class TestNotesAPI(unittest.TestCase):
         after = json.loads(body)
         self.assertNotIn("to be deleted", after)
 
+    def test_post_empty_text_is_rejected(self):
+        status, _ = self.post("/notes", {"text": "   "})
+        self.assertEqual(status, 400)
+
 
 if __name__ == "__main__":
     unittest.main()
