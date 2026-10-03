@@ -34,6 +34,21 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self._send(404, b"not found")
 
+    def do_DELETE(self):
+        if self.path.startswith("/notes/"):
+            try:
+                idx = int(self.path.split("/notes/")[1])
+            except ValueError:
+                self._send(400, b"invalid index")
+                return
+            if 0 <= idx < len(NOTES):
+                NOTES.pop(idx)
+                self._send(200, json.dumps(NOTES).encode())
+            else:
+                self._send(404, b"note not found")
+        else:
+            self._send(404, b"not found")
+
     def _send(self, code, body):
         self.send_response(code)
         self.send_header("Content-Type", "application/json")
