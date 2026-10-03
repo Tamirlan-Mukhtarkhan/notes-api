@@ -8,6 +8,7 @@ A small HTTP API for managing a list of notes.
 - `GET /healthz` — health check, returns `ok`
 - `GET /notes` — returns the list of notes as JSON
 - `POST /notes` — adds a new note, body: `{"text": "..."}`
+- `DELETE /notes/<index>` — removes a note by its index
 
 ## How to run
 
