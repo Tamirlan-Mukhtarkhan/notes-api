@@ -37,6 +37,17 @@ class TestNotesAPI(unittest.TestCase):
         except urllib.error.HTTPError as e:
             return e.code, e.read().decode()
 
+    def delete(self, path):
+        req = urllib.request.Request(
+            f"http://127.0.0.1:{self.port}{path}",
+            method="DELETE",
+        )
+        try:
+            with urllib.request.urlopen(req) as r:
+                return r.status, r.read().decode()
+        except urllib.error.HTTPError as e:
+            return e.code, e.read().decode()
+
     def test_healthz_is_ok(self):
         status, body = self.get("/healthz")
         self.assertEqual(status, 200)
@@ -60,6 +71,15 @@ class TestNotesAPI(unittest.TestCase):
         after = json.loads(body)
         self.assertEqual(len(after), len(before) + 1)
         self.assertIn("new test note", after)
+
+    def test_delete_note_removes_it(self):
+        self.post("/notes", {"text": "to be deleted"})
+        before = json.loads(self.get("/notes")[1])
+        idx = before.index("to be deleted")
+        status, body = self.delete(f"/notes/{idx}")
+        self.assertEqual(status, 200)
+        after = json.loads(body)
+        self.assertNotIn("to be deleted", after)
 
 
 if __name__ == "__main__":
