@@ -14,6 +14,8 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/notes":
             body = json.dumps(NOTES).encode()
             self._send(200, body)
+        elif self.path == "/notes/count":
+            self._send(200, str(len(NOTES)).encode())
         else:
             self._send(404, b"not found")
 
