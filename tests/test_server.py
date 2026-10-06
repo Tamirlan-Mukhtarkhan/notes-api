@@ -50,7 +50,7 @@ class TestNotesAPI(unittest.TestCase):
 
     def test_healthz_is_ok(self):
         status, body = self.get("/healthz")
-        self.assertEqual(status, 200)
+        self.assertEqual(status, 201)
         self.assertTrue(body.strip())
 
     def test_root_answers(self):
