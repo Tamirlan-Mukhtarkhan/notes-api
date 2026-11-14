@@ -3,6 +3,7 @@ import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 NOTES = ["buy milk", "walk the dog", "write code"]
+GREETING = os.environ.get("GREETING", "notes api")
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -10,7 +11,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/healthz":
             self._send(200, b"ok")
         elif self.path == "/":
-            self._send(200, b"notes api")
+            self._send(200, GREETING.encode())
         elif self.path == "/notes":
             body = json.dumps(NOTES).encode()
             self._send(200, body)
