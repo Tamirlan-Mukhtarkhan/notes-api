@@ -18,7 +18,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: app
-          image: ghcr.io/tamirlan-mukhtarkhan/notes-api:0269c909881bdaf1730b4c783bb761ed5d878355
+          image: ghcr.io/tamirlan-mukhtarkhan/notes-api:9407979a199b2c0ad3347c376572c403f9f5c58f
           ports:
             - name: http
               containerPort: 8080
