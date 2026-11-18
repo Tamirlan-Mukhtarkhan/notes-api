@@ -61,4 +61,7 @@ jobs:
       - name: Run the M5 marker - static and live
         run: |
           curl -fsSLO https://raw.githubusercontent.com/inf345/inf345-week10-lab/main/mark_m5.py
+          # DIAGNOSTIC, not the official marker: pause before the CRD wait (kubernetes/kubernetes#66439)
+          sed -i 's|^    def crds(self):$|    def crds(self):\n        __import__("time").sleep(20)|' mark_m5.py
+          grep -n -A2 'def crds' mark_m5.py
           python mark_m5.py --path . --kind
